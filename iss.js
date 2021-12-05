@@ -27,13 +27,13 @@ const fetchMyIP = function(callback) {
 };
 
 
-const fetchCoordsByIP = function (ip, callback) {
+const fetchCoordsByIP = function(ip, callback) {
   request(`https://api.freegeoip.app/json/${ip}?apikey=d645f5a0-554d-11ec-9456-a1582d5d9afb`, (error, response, body) => {
     if (error) {
       callback(error, null);
       return;
-    }  
-  // inside the request callback ...
+    }
+    // inside the request callback ...
     // if non-200 status, assume server error
     if (response.statusCode !== 200) {
       callback(Error(`Status Code ${response.statusCode} when fetching Coordinates for IP: ${body}`), null);
@@ -43,16 +43,16 @@ const fetchCoordsByIP = function (ip, callback) {
 
     callback(null, { latitude, longitude });
   });
-}
+};
 
 
-const fetchISSFlyOverTimes = function (coords, callback) {
+const fetchISSFlyOverTimes = function(coords, callback) {
   request(`https://iss-pass.herokuapp.com/json/?lat=${coords.latitude}&lon=${coords.longitude}`, (error, response, body) => {
     if (error) {
       callback(error, null);
       return;
     }
-  if (response.statusCode !== 200) {
+    if (response.statusCode !== 200) {
       callback(Error(`Status Code ${response.statusCode} when fetching Coordinates for IP: ${body}`), null);
       return;
     }
@@ -80,12 +80,11 @@ const nextISSTimesForMyLocation = function(callback) {
         if (error) {
           return callback(error, null);
         }
-
         callback(null, nextPasses);
       });
     });
   });
 };
 
-module.exports = {fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocation};
+module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocation };
 
